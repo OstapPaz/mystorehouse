@@ -24,8 +24,7 @@
   <br>
 
   <div class="category">
-    <%= f.label :category %>
-    <%= f.text_field :category %>
+    <%= f.collection_radio_buttons :category_id, Category.all, :id, :name %>
   </div>
   <br>
 

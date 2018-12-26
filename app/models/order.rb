@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
-  has_many :products
-  belongs_to :contact_customer
-
+  has_many :order_product
+  has_many :product, :through => :order_product
+  belongs_to :user
 end

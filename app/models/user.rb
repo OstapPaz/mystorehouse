@@ -3,6 +3,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_one :contact_customer
+  has_one :customer_contacts
+  has_many :orders
   validates :name, :email, :phone_number, presence: true
+
+  def admin?
+    self.admin_permission
+  end
 end
