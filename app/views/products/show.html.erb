@@ -2,7 +2,14 @@
 
 <%= @product.name %> <br>
 <%= @product.model %> <br>
-<%= @product.category %> <br>
+<%= @product.category.name %> <br>
+
+<%= form_tag(add_to_cart_path, method: "post") do%>
+  <%= label_tag(:num,"Number of product:") %>
+  <%= text_field_tag(:num) %>
+  <%= hidden_field_tag(:id, @product.id) %>
+  <%= submit_tag("Add to cart") %>
+<% end %>
 
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>

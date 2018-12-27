@@ -1,4 +1,4 @@
-<%= form_with(model: order, local: true) do |form| %>
+<%= form_for(@order, url: {action: "create"}) do |f| %>
   <% if order.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
@@ -11,11 +11,62 @@
     </div>
   <% end %>
 
+  <%# unless @customer.blank? %>
+<!--  <div class="name">-->
+    <%#= f.label :name_customer %>
+    <%#= f.text_field :name,  :value => "#{@customer.name}" %>
+<!--  </div> <br>-->
 
+<!--  <div class="field">-->
+<!--    <%#= f.label :contact_phone_number %><br />-->
+    <%#= f.email_field :contact_phone_number, :value => "#{@customer.customer_contacts.contact_number}" %>
+<!--  </div>-->
 
+<!--  <div class="field">-->
+<!--    <%#= f.label :address %><br />-->
+    <%#= f.email_field :address, :value => "#{@customer.customer_contacts.address}" %>
+<!--  </div>-->
+  <%# else %>
+    <div class="name">
+      <%= f.label :name_customer %>
+      <%= f.text_field :name,  :value => "Bruce" %>
+    </div> <br>
 
+    <div class="field">
+      <%= f.label :contact_phone_number %>
+      <%= f.email_field :contact_phone_number, :value => "555 55 55" %>
+    </div> <br>
+
+    <div class="field">
+      <%= f.label :address %>
+      <%= f.email_field :address, :value => "Gotham" %>
+    </div> <br>
+  <%# end %>
+
+  <table>
+    <thead>
+    <tr>
+      <th></th>
+      <th> Current cart </th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <% @order.orders_products.each do |order_product| %>
+      <tr>
+        <td><%= order_product.product.name+" "+order_product.product.model+" "+order_product.product.price.to_s%></td>
+        <td><%= "#{order_product.number_product}"%></td>
+        <td><%= link_to 'Show', order_product.product %></td>
+        <td><%= link_to 'Remove from order cart',  remove_from_cart_url(remove_product_id: order_product.product.id),
+                        method: :delete %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= f.submit %>
   </div>
 <% end %>

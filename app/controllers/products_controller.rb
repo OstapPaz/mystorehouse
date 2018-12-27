@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  # before_action :cart, only: [:add_to_cart]
 
   # GET /products
   # GET /products.json
@@ -62,6 +63,13 @@ class ProductsController < ApplicationController
     end
   end
 
+  def add_to_cart
+    add_prod_to_cart(params[:id], params[:num].to_i)
+    respond_to do |format|
+      format.html { redirect_to products_path, notice: 'Product was successfully added to cart.' }
+    end
+  end
+
 private
   # Use callbacks to share common setup or constraints between actions.
   def set_product
@@ -70,6 +78,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def product_params
-    params.require(:product).permit(:name, :model, :category)
+    params.require(:product).permit(:name, :model, :category_id)
   end
 end
