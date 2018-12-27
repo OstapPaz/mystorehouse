@@ -29,44 +29,49 @@
   <%# else %>
     <div class="name">
       <%= f.label :name_customer %>
-      <%= f.text_field :name,  :value => "Bruce" %>
+      <%= f.text_field :name_customer,  :value => "Bruce" %>
     </div> <br>
 
     <div class="field">
       <%= f.label :contact_phone_number %>
-      <%= f.email_field :contact_phone_number, :value => "555 55 55" %>
+      <%= f.text_field :contact_phone_number, :value => "555 55 55" %>
     </div> <br>
 
     <div class="field">
       <%= f.label :address %>
-      <%= f.email_field :address, :value => "Gotham" %>
+      <%= f.text_field :address, :value => "Gotham" %>
     </div> <br>
   <%# end %>
-
-  <table>
-    <thead>
-    <tr>
-      <th></th>
-      <th> Current cart </th>
-      <th></th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-    <% @order.orders_products.each do |order_product| %>
-      <tr>
-        <td><%= order_product.product.name+" "+order_product.product.model+" "+order_product.product.price.to_s%></td>
-        <td><%= "#{order_product.number_product}"%></td>
-        <td><%= link_to 'Show', order_product.product %></td>
-        <td><%= link_to 'Remove from order cart',  remove_from_cart_url(remove_product_id: order_product.product.id),
-                        method: :delete %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
 
   <div class="actions">
     <%= f.submit %>
   </div>
+<% end %>
+
+
+<%= form_tag("/update_cart", method: "post") do %>
+<table>
+  <thead>
+  <tr>
+    <th></th>
+    <th colspan="3"> Current cart </th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+
+  <% @order.orders_products.each do |order_product| %>
+    <tr>
+      <td><%= order_product.product.name+" "+order_product.product.model+" "+order_product.product.price.to_s%></td>
+      <td><%= text_field_tag("[products]#{order_product.product.id}", order_product.count) %></td>
+      <td><%= link_to 'Show', order_product.product %></td>
+      <td><%= link_to 'Remove from order cart',  remove_from_cart_url(remove_product_id: order_product.product.id),
+                      method: :delete %></td>
+    </tr>
+  <% end %>
+  <td><%= submit_tag 'sss' %></td>
+  </tbody>
+</table>
+<p> Current price of order <%= @order.price %></p>
 <% end %>

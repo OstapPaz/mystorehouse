@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-  # before_action :cart, only: [:add_to_cart]
+  before_action :user_admin?, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /products
   # GET /products.json
@@ -11,6 +11,8 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+    @comments = @product.comments || []
+    @comment = Comment.new
   end
 
   # GET /products/new
@@ -26,7 +28,6 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.new(product_params)
-    puts @product.category
 
     respond_to do |format|
       if @product.save
@@ -78,6 +79,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def product_params
-    params.require(:product).permit(:name, :model, :category_id)
+    params.require(:product).permit(:name, :model, :price, :category_id)
   end
 end

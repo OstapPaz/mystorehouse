@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_27_102617) do
+ActiveRecord::Schema.define(version: 2018_12_27_163559) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
+  end
+
+  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "text"
+    t.decimal "rating", precision: 10
+    t.bigint "user_id"
+    t.bigint "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_comments_on_product_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "customer_contacts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -32,13 +43,14 @@ ActiveRecord::Schema.define(version: 2018_12_27_102617) do
     t.string "contact_phone_number"
     t.string "address"
     t.bigint "user_id"
+    t.decimal "price", precision: 10
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "orders_products", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "product_id", null: false
     t.bigint "order_id", null: false
-    t.decimal "number_product", precision: 10
+    t.decimal "count", precision: 10
     t.index ["product_id", "order_id"], name: "index_orders_products_on_product_id_and_order_id"
   end
 

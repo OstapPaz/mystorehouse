@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :user_signed_in?
-  #before_action :user_admin?
+  before_action :user_admin?
 
   def index
     @category = Category.new
@@ -44,9 +44,8 @@ class CategoriesController < ApplicationController
     params.require(:category).permit(:name)
   end
 
-  def user_admin?
-    :current_user.admin?
-  end
+
+
 
 
 end

@@ -5,9 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_one :customer_contacts
   has_many :orders
+  has_many :comments, dependent: :destroy
   validates :name, :email, :phone_number, presence: true
 
-  def admin?
-    self.admin_permission
-  end
 end

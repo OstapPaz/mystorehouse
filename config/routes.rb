@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :orders
   resources :categories
 
+  post 'create_comment', to: 'comments#create'
   post 'add_to_cart', to: 'products#add_to_cart'
+  post 'update_cart', to: 'orders#update_cart'
   delete 'remove_from_cart', to: 'orders#remove_from_cart'
 end
