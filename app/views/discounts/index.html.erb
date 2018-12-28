@@ -1,0 +1,23 @@
+<h1>Discounts</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th colspan="4"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @discounts.each do |discount| %>
+    <tr>
+      <td> Discount for: <%= discount.name %> </td>
+      <td> Number criterion: <%= discount.criterion %> </td>
+      <td> Coefficient criterion: <%= discount.criterion_second %> </td>
+      <td><%= link_to 'Discount', discount_path(discount) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<br>
+
+<%= render 'form_new' %>

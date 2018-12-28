@@ -1,0 +1,31 @@
+<h3> Discount details </h3>
+<p id="notice" ><%= notice %></p>
+
+<%= @discount.name %> <br>
+<%= @discount.criterion %> <br>
+<%= @discount.criterion_second %> <br>
+
+<h3> Change discount </h3>
+
+<%= form_for(@discount) do |f| %>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name, :value => @discount.name %>
+  </div> <br>
+
+  <div class="field">
+    <%= f.label :criterion %>
+    <%= f.text_field :criterion, :value => @discount.criterion %>
+  </div> <br>
+
+  <div class="field">
+    <%= f.label :criterion_second %>
+    <%= f.text_field :criterion_second, :value => @discount.criterion_second %>
+  </div> <br>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', discounts_path %>

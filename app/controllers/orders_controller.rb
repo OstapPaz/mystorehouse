@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new_from_cart(cart)
+    @discount_price = DiscountService.new(cart['products'], @order.price).discount_price
   end
 
   def remove_from_cart
@@ -16,6 +17,8 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params).add_cart(cart)
     @order.user_id = current_user.id if current_user.present?
+    @order.price = DiscountService.new(cart['products'], @order.price).discount_price
+
     if @order.save
       flash[:info] = "Order created"
       session['cart'] = { 'products' => [] }
@@ -23,6 +26,7 @@ class OrdersController < ApplicationController
     else
       render 'new'
     end
+
   end
 
   def index

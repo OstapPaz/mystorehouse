@@ -1,0 +1,22 @@
+<h3> New discount </h3>
+
+<%= form_for(@discount, url: {action: "create"}) do |f| %>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name%>
+  </div> <br>
+
+  <div class="field">
+    <%= f.label :criterion %>
+    <%= f.text_field :criterion %>
+  </div> <br>
+
+  <div class="field">
+    <%= f.label :criterion_second %>
+    <%= f.text_field :criterion_second %>
+  </div> <br>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

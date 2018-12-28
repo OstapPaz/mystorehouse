@@ -1,23 +1,24 @@
-<p id="notice"><%= notice %></p>
+  <h3> Product details </h3>
+  <p id="notice" ><%= notice %></p>
 
-<%= @product.name %> <br>
-<%= @product.model %> <br>
-<%= @product.category.name %> <br>
-<%= @product.price %> UAH <br>
-<%= @product.show_rating %>
+  <%= @product.name %> <br>
+  <%= @product.model %> <br>
+  <%= @product.category.name %> <br>
+  <%= @product.price %> UAH <br>
+  <%= @product.show_rating %>
 
-<%= form_tag(add_to_cart_path, method: "post") do%>
-  <%= label_tag(:num,"Number of product:") %>
-  <%= text_field_tag(:num) %>
-  <%= hidden_field_tag(:id, @product.id) %>
-  <%= submit_tag("Add to cart") %>
-<% end %> <br><br>
+  <%= form_tag(add_to_cart_path, method: "post") do%>
+    <%= label_tag(:num,"Number of product:") %>
+    <%= text_field_tag(:num) %>
+    <%= hidden_field_tag(:id, @product.id) %>
+    <%= submit_tag("Add to cart") %>
+  <% end %> <br><br>
 
-<% if user_signed_in? %>
-  <%= render 'comments/form_comment' %>
-<% end %>
+  <% if user_signed_in? %>
+    <%= render 'comments/form_comment' %>
+  <% end %>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+  <%= link_to 'Edit', edit_product_path(@product) %> |
+  <%= link_to 'Back', products_path %>
 
-<%= render 'comments/product_comments' %>
+  <%= render 'comments/product_comments' %>

@@ -1,0 +1,32 @@
+<%= form_for @feedback do |f| %>
+  <% if @feedback.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@feedback.errors.count, "error") %> prohibited this feedback from being saved:</h2>
+
+      <ul>
+      <% @feedback.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name,  :value => "Bruce" %>
+  </div> <br>
+
+  <div class="field">
+    <%= f.label :contact %>
+    <%= f.text_field :contact, :value => "555 55 55" %>
+  </div> <br>
+
+  <div class="field">
+    <%= f.label :text %>
+    <%= f.text_field :text, :value => "Good site!" %>
+  </div> <br>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

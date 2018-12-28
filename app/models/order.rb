@@ -1,7 +1,34 @@
 class Order < ApplicationRecord
+  include AASM
+
   has_many :orders_products
   has_many :products, :through => :orders_products
   belongs_to :user, optional: true
+
+  aasm column: 'status' do
+    state :new, initial: true
+    state :confirmed
+    state :paid
+    state :sent
+    state :archived
+
+    event :confirm do
+      transition from: [:new], to: :confirmed
+    end
+
+    event :pay do
+      transition from: [:confirmed], to: :paid
+    end
+
+    event :send do
+      transition from: [:paid], to: :sent
+    end
+
+    event :archive do
+      transitions from: [:new, :confirmed, :paid, :sent], to: :archived
+    end
+
+  end
 
   def self.new_from_cart(cart)
     order = self.new

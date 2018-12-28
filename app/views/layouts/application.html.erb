@@ -11,6 +11,8 @@
 
   <body>
     <%= yield %>
+    <%= render 'layouts/header' %>
+    <body class="body" >
     <p class="navbar-text pull-right">
       <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
       <% if user_signed_in? %>
@@ -25,5 +27,6 @@
       <br>
       <%= link_to "Home", root_path %>
     </p>
+    </body>
   </body>
 </html>

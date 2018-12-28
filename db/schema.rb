@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_27_163559) do
+ActiveRecord::Schema.define(version: 2018_12_28_134121) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -36,6 +36,23 @@ ActiveRecord::Schema.define(version: 2018_12_27_163559) do
     t.index ["user_id"], name: "index_customer_contacts_on_user_id"
   end
 
+  create_table "discounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.decimal "criterion", precision: 10, null: false
+    t.float "criterion_second"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "feedbacks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "text"
+    t.string "contact"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -44,6 +61,7 @@ ActiveRecord::Schema.define(version: 2018_12_27_163559) do
     t.string "address"
     t.bigint "user_id"
     t.decimal "price", precision: 10
+    t.string "status"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
