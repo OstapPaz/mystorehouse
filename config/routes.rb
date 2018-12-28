@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :feedbacks
   resources :discounts, only: [:index, :create, :update, :show]
 
+  get 'order/all', to: 'orders#index_all'
+  get 'orders/change_status/:id', to: 'orders#change_status', as: 'change_status'
   post 'create_comment', to: 'comments#create'
   post 'add_to_cart', to: 'products#add_to_cart'
   post 'update_cart', to: 'orders#update_cart'

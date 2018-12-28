@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 
-  before_action :user_signed_in?, only: [:index]
+  before_action :user_signed_in?, only: [:index, :change_status]
 
   def new
     @order = Order.new_from_cart(cart)
@@ -33,9 +33,18 @@ class OrdersController < ApplicationController
     @orders = Order.where(user_id: current_user.id)
   end
 
+  def index_all
+    @orders = Order.all
+  end
+
   def update_cart
     Cart.update(cart, params['products'])
     redirect_back fallback_location: new_order_path
+  end
+
+  def change_status
+    Order.find(params[:id]).change_order
+    redirect_to order_all_path
   end
 
   private
@@ -43,6 +52,5 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(:name_customer, :contact_phone_number, :address)
   end
-
 
 end

@@ -9,23 +9,28 @@ class Order < ApplicationRecord
     state :new, initial: true
     state :confirmed
     state :paid
-    state :sent
+    state :send
     state :archived
+    state :rejected
 
     event :confirm do
-      transition from: [:new], to: :confirmed
+      transitions from: [:new], to: :confirmed
     end
 
     event :pay do
-      transition from: [:confirmed], to: :paid
+      transitions from: [:confirmed], to: :paid
     end
 
-    event :send do
-      transition from: [:paid], to: :sent
+    event :sent do
+      transitions from: [:paid], to: :send
     end
 
     event :archive do
-      transitions from: [:new, :confirmed, :paid, :sent], to: :archived
+      transitions from: [:new, :confirmed, :paid, :send], to: :archived
+    end
+
+    event :reject do
+      transitions from: [:new, :confirmed, :send], to: :rejected
     end
 
   end
@@ -50,6 +55,23 @@ class Order < ApplicationRecord
 
   def price
     orders_products.sum(0) { |order_product| order_product.product.price * order_product.count }
+  end
+
+  def change_order
+    if status == 'new'
+      confirm
+    elsif status == 'confirmed'
+      pay
+    elsif status == 'confirm'
+      sent
+    elsif status == 'send'
+      archive
+    elsif status == 'archived'
+      reject
+    else
+      status = 'confirmed'
+    end
+    status
   end
 
 end
