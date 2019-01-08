@@ -13,7 +13,7 @@
     <% @order.orders_products.each do |order_product| %>
       <tr>
         <td><%= order_product.product.name+" "+order_product.product.model+" "+order_product.product.price.to_s%></td>
-        <td><%= text_field_tag("[products]#{order_product.product.id}", order_product.count) %></td>
+        <td><%= text_field_tag("[products]#{order_product.product.id}", order_product.amount) %></td>
         <td><%= link_to 'Show', order_product.product %></td>
         <td><%= link_to 'Remove from order cart',  remove_from_cart_url(remove_product_id: order_product.product.id),
                         method: :delete %></td>
@@ -22,6 +22,6 @@
     <td><%= submit_tag 'Edit order' %></td>
     </tbody>
   </table>
-  <p> Current price of order <%= @order.price %></p>
+  <p> Current price of order <%= @order.price_current %></p>
   <p> Price with discount <%= @discount_price %> </p>
 <% end %>

@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new_from_cart(cart)
-    @discount_price = DiscountService.new(cart['products'], @order.price).discount_price
+    @discount_price = DiscountService.new(cart['products'], @order.price_current).discount_price
   end
 
   def remove_from_cart
@@ -17,9 +17,11 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params).add_cart(cart)
     @order.user_id = current_user.id if current_user.present?
-    @order.price = DiscountService.new(cart['products'], @order.price).discount_price
-
+    new_price = DiscountService.new(cart['products'], @order.price_current).discount_price
+    @order.update_attribute(:price, new_price)
+    @order.price = new_price
     if @order.save
+      OrderMailer.with(user: current_user, order: @order).order_email.deliver_later unless current_user.nil?
       flash[:info] = "Order created"
       session['cart'] = { 'products' => [] }
       redirect_to orders_path
@@ -43,7 +45,16 @@ class OrdersController < ApplicationController
   end
 
   def change_status
-    Order.find(params[:id]).change_order
+    Order.find(params[:id]).change_order_status
+    redirect_to order_all_path
+  end
+
+  def show
+    @ord = Order.find(params[:id])
+  end
+
+  def destroy
+    Order.destroy(params[:id])
     redirect_to order_all_path
   end
 

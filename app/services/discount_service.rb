@@ -17,6 +17,7 @@ class DiscountService
     else
       disc_price = @price
     end
+
     disc_price
   end
 

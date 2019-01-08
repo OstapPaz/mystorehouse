@@ -1,0 +1,9 @@
+<%= form_tag("/products", method: "get") do %>
+
+  <%= label_tag(:criteria, "Criteria:") %>
+  <%= text_field_tag(:criteria) %> <br>
+
+  <%= select_tag :category, options_for_select(Category.all.map{|el| [el.name, el.id]}.insert(0, "") ) %>
+
+  <%= submit_tag("Search") %>
+<% end %>

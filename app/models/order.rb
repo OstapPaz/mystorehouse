@@ -6,7 +6,7 @@ class Order < ApplicationRecord
   belongs_to :user, optional: true
 
   aasm column: 'status' do
-    state :new, initial: true
+    state :init, initial: true
     state :confirmed
     state :paid
     state :send
@@ -14,7 +14,7 @@ class Order < ApplicationRecord
     state :rejected
 
     event :confirm do
-      transitions from: [:new], to: :confirmed
+      transitions from: [:init, :rejected], to: :confirmed
     end
 
     event :pay do
@@ -26,11 +26,11 @@ class Order < ApplicationRecord
     end
 
     event :archive do
-      transitions from: [:new, :confirmed, :paid, :send], to: :archived
+      transitions from: [:init, :confirmed, :paid, :send], to: :archived
     end
 
     event :reject do
-      transitions from: [:new, :confirmed, :send], to: :rejected
+      transitions from: [:archived], to: :rejected
     end
 
   end
@@ -39,7 +39,7 @@ class Order < ApplicationRecord
     order = self.new
 
     cart['products'].each do |product|
-      order.orders_products << OrdersProduct.new(product_id: product['product_id'], count: product['count'])
+      order.orders_products << OrdersProduct.new(product_id: product['product_id'], amount: product['count'])
     end
 
     order
@@ -47,31 +47,31 @@ class Order < ApplicationRecord
 
   def add_cart(cart)
     cart['products'].each do |product|
-      orders_products << OrdersProduct.new(product_id: product['product_id'], count: product['count'])
+      orders_products << OrdersProduct.new(product_id: product['product_id'], amount: product['count'])
     end
-    self.price = price
+    self.price = price_current
     self
   end
 
-  def price
-    orders_products.sum(0) { |order_product| order_product.product.price * order_product.count }
+  def price_current
+    orders_products.sum(0) { |order_product| order_product.product.price * order_product.amount.to_i }
   end
 
-  def change_order
-    if status == 'new'
+  def change_order_status
+    if init?
       confirm
-    elsif status == 'confirmed'
+    elsif confirmed?
       pay
-    elsif status == 'confirm'
+    elsif paid?
       sent
-    elsif status == 'send'
+    elsif send?
       archive
-    elsif status == 'archived'
+    elsif archived?
       reject
     else
-      status = 'confirmed'
+      confirm
     end
-    status
+    self.update(status: self.status)
   end
 
 end

@@ -28,6 +28,8 @@ gem 'activerecord-session_store'
 
 gem 'aasm', '~> 4.12'
 
+gem 'image_processing', '~> 1.2'
+
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -62,6 +64,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem "aws-sdk-s3", require: false
 end
 
 group :test do

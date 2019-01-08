@@ -5,7 +5,8 @@
   <%= @product.model %> <br>
   <%= @product.category.name %> <br>
   <%= @product.price %> UAH <br>
-  <%= @product.show_rating %>
+  <%= @product.show_rating %> <br>
+  <%= image_tag @product.avatar.variant(resize: '400x400')  %> <br>
 
   <%= form_tag(add_to_cart_path, method: "post") do%>
     <%= label_tag(:num,"Number of product:") %>

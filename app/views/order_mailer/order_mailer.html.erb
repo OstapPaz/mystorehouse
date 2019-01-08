@@ -1,0 +1,24 @@
+
+Your order , <%= @user.name %>
+===============================================
+
+<table>
+  <thead>
+  <tr>
+    <th colspan="4"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @ord.products.each do |product| %>
+    <tr>
+      <td> product name: <%= product.name %> </td>
+      <td> product model: <%= product.model %> </td>
+      <td> product price: <%= product.price %> </td>
+      <td> product amount: <%= product.orders_products.count %> </td>
+    </tr>
+  <% end %>
+  </tbody>
+  Total price for order  <%= @ord.price %>
+</table>
+
