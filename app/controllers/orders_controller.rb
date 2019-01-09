@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 
-  before_action :user_signed_in?, only: [:index, :change_status]
+  before_action :authenticate_user!, only: [:index, :change_status]
 
   def new
     @order = Order.new_from_cart(cart)
@@ -17,9 +17,7 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params).add_cart(cart)
     @order.user_id = current_user.id if current_user.present?
-    new_price = DiscountService.new(cart['products'], @order.price_current).discount_price
-    @order.update_attribute(:price, new_price)
-    @order.price = new_price
+    @order.price = DiscountService.new(cart['products'], @order.price_current).discount_price
     if @order.save
       OrderMailer.with(user: current_user, order: @order).order_email.deliver_later unless current_user.nil?
       flash[:info] = "Order created"

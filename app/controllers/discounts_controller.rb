@@ -1,5 +1,5 @@
 class DiscountsController < ApplicationController
-
+  before_action :authenticate_user!
   before_action :user_admin?
 
   def index

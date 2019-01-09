@@ -5,7 +5,7 @@ class FeedbacksControllerTest < ActionDispatch::IntegrationTest
     @feedback = feedbacks(:one)
   end
 
-  test "should get index" do
+  test "should get show" do
     get feedbacks_url
     assert_response :success
   end

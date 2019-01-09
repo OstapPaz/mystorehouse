@@ -6,6 +6,6 @@ class User < ApplicationRecord
   has_one :customer_contacts
   has_many :orders
   has_many :comments, dependent: :destroy
-  validates :name, :email, :phone_number, presence: true
+  validates :name, :email, presence: true
 
 end

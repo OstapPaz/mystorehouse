@@ -5,7 +5,7 @@ class ProductsTest < ApplicationSystemTestCase
     @product = products(:one)
   end
 
-  test "visiting the index" do
+  test "visiting the show" do
     visit products_url
     assert_selector "h1", text: "Products"
   end

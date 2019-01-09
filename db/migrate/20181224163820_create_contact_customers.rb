@@ -16,7 +16,7 @@ class CreateContactCustomers < ActiveRecord::Migration[5.2]
 
 
     create_join_table :products, :orders do |t|
-      t.index [:product_id, :order_id]
+      t.show [:product_id, :order_id]
     end
 
 

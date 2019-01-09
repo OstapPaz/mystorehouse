@@ -23,5 +23,9 @@ class ApplicationController < ActionController::Base
     redirect_to root_path unless current_user.admin_permission
   end
 
+  def user_signed_checker
+    redirect_to root_path unless user_signed_in?
+  end
+
   helper_method :order_price, :current_user
 end

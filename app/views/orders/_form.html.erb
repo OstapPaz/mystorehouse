@@ -11,22 +11,41 @@
     </div>
   <% end %>
 
+  <% if user_signed_in? %>
+
     <div class="name">
       <%= f.label :name_customer %>
-      <%= f.text_field :name_customer,  :value => "Bruce" %>
+      <%= f.text_field :name_customer, :value => current_user.name %>
     </div> <br>
 
     <div class="field">
       <%= f.label :contact_phone_number %>
-      <%= f.text_field :contact_phone_number, :value => "555 55 55" %>
+      <%= f.text_field :contact_phone_number, :value => current_user.customer_contacts.contact_number %>
     </div> <br>
 
     <div class="field">
       <%= f.label :address %>
-      <%= f.text_field :address, :value => "Gotham" %>
+      <%= f.text_field :address, :value => current_user.customer_contacts.address %>
     </div> <br>
-  <%# end %>
 
+  <% else %>
+
+    <div class="name">
+      <%= f.label :name_customer %>
+      <%= f.text_field :name_customer,  :value => "Oleg" %>
+    </div> <br>
+
+    <div class="field">
+      <%= f.label :contact_phone_number %>
+      <%= f.text_field :contact_phone_number, :value => "123 45 67" %>
+    </div> <br>
+
+    <div class="field">
+      <%= f.label :address %>
+      <%= f.text_field :address, :value => "Lviv" %>
+    </div> <br>
+
+  <% end %>
   <div class="actions">
     <%= f.submit %>
   </div>

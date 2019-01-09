@@ -5,7 +5,7 @@ class FeedbacksTest < ApplicationSystemTestCase
     @feedback = feedbacks(:one)
   end
 
-  test "visiting the index" do
+  test "visiting the show" do
     visit feedbacks_url
     assert_selector "h1", text: "Feedbacks"
   end

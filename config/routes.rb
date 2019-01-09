@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :feedbacks
   resources :discounts, only: [:index, :create, :update, :show]
 
+  get 'customer_contacts/show', to: 'customer_contacts#show'
+  patch 'customer_contacts/update', to: 'customer_contacts#update'
   get 'order/all', to: 'orders#index_all'
   get 'orders/change_status/:id', to: 'orders#change_status', as: 'change_status'
   post 'create_comment', to: 'comments#create'
