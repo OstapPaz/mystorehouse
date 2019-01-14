@@ -1,6 +1,8 @@
 class OrdersController < ApplicationController
 
-  before_action :authenticate_user!, only: [:index, :change_status]
+  before_action :authenticate_user!, only: [:index, :change_status, :index_all, :destroy]
+  before_action :user_admin_checker, only: [:index_all, :change_status, :destroy]
+  after_action :order_mail, only: [:create]
 
   def new
     @order = Order.new_from_cart(cart)
@@ -19,14 +21,12 @@ class OrdersController < ApplicationController
     @order.user_id = current_user.id if current_user.present?
     @order.price = DiscountService.new(cart['products'], @order.price_current).discount_price
     if @order.save
-      OrderMailer.with(user: current_user, order: @order).order_email.deliver_later unless current_user.nil?
       flash[:info] = "Order created"
       session['cart'] = { 'products' => [] }
       redirect_to orders_path
     else
       render 'new'
     end
-
   end
 
   def index
@@ -60,6 +60,10 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:name_customer, :contact_phone_number, :address)
+  end
+
+  def order_mail
+    OrderMailer.with(user: current_user, order: @order).order_email.deliver_later unless current_user.nil?
   end
 
 end

@@ -1,28 +1,16 @@
 <p id="notice"><%= notice %></p>
-<p> <%= session[:cart].inspect %> </p>
 <h1>Products</h1>
 
 <%= render 'filter_form'%>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="4"></th>
-    </tr>
-  </thead>
+<% @products.each do |product| %>
+<div class="col-md-2 column productbox">
+  <%= image_tag product.avatar, size: '250x250'  %>
+  <div class="producttitle"><%= product.name %> <%= product.model %></div>
+  <div class="productprice"><div class="pull-right"><%= link_to 'Show', product %></div><div class="pricetext"> ‎₴ ‎<%= product.price %></div></div>
+</div>
+<% end %>
 
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= product.name + " " + product.model %> </td>
-        <td><%= link_to 'Show', product %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) %></td>
-        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Product', new_product_path %>
+<% if admin? %>
+  <%= link_to 'New Product', new_product_path %>
+<% end %>

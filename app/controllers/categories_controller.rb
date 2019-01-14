@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :user_admin?
+  before_action :user_admin_checker
 
   def index
     @category = Category.new
@@ -43,9 +43,4 @@ class CategoriesController < ApplicationController
   def category_params
     params.require(:category).permit(:name)
   end
-
-
-
-
-
 end

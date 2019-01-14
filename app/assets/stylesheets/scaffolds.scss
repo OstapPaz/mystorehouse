@@ -1,10 +1,17 @@
 body {
   background-color: #fff;
   color: #333;
-  margin: 33px;
+  margin: 70px;
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
+}
+
+footer {
+  position: fixed;
+  height: 100px;
+  bottom: 0;
+  width: 100%;
 }
 
 p, ol, ul, td {
@@ -82,3 +89,47 @@ div {
 label {
   display: block;
 }
+
+.productbox {
+  background-color:#ffffff;
+  padding:10px;
+  margin-bottom:10px;
+  -webkit-box-shadow: 0 8px 6px -6px  #999;
+  -moz-box-shadow: 0 8px 6px -6px  #999;
+  box-shadow: 0 8px 6px -6px #999;
+}
+
+.producttitle {
+  font-weight:bold;
+  padding:5px 0 5px 0;
+}
+
+.productprice {
+  border-top:1px solid #dadada;
+  padding-top:5px;
+}
+
+.pricetext {
+  font-weight:bold;
+  font-size:1.4em;
+}
+
+
+h1.page-header {
+  margin-top: -5px;
+}
+
+.sidebar {
+  padding-left: 0;
+}
+
+.main-container {
+  background: #FFF;
+  padding-top: 15px;
+  margin-top: -20px;
+}
+
+.footer {
+  width: 100%;
+}
+

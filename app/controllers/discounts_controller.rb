@@ -1,6 +1,6 @@
 class DiscountsController < ApplicationController
   before_action :authenticate_user!
-  before_action :user_admin?
+  before_action :user_admin_checker
 
   def index
     @discount = Discount.new

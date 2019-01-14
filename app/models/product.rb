@@ -14,7 +14,9 @@ class Product < ApplicationRecord
 
   def check_avatar
     default_image = '/home/opazyniuk/Downloads/question_top.jpg'
-    avatar.attach(io: File.open(default_image), filename: 'question_top.jpg', content_type: 'image/png') if avatar.nil?
+    if !self.avatar.attached?
+      avatar.attach(io: File.open(default_image), filename: 'default', content_type: 'image/jpeg')
+    end
   end
 
 
