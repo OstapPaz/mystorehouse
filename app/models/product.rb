@@ -4,6 +4,7 @@ class Product < ApplicationRecord
   has_many :orders_products
   has_many :orders, :through => :orders_products
   belongs_to :category
+  has_many :cart_items
   has_many :comments, dependent: :destroy
   has_one_attached :avatar
 

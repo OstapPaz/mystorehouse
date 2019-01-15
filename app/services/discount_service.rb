@@ -1,8 +1,8 @@
 class DiscountService
 
 
-  def initialize(products, price)
-    @products = Product.find(products.map{ |product| product['product_id'].to_i })
+  def initialize(cart, price)
+    @products = cart.products
     @price = price
   end
 
@@ -36,7 +36,7 @@ class DiscountService
     checker = false
     Category.all.each do |category|
        if @products.count { |product| product.category.name == category.name } > same_category.criterion
-        checker = true
+         checker = true
        end
     end
     checker
@@ -53,8 +53,5 @@ class DiscountService
   def price_board
     Discount.find_by(name: 'price board')
   end
-
-
-
 
 end

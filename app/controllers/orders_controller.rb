@@ -6,11 +6,11 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new_from_cart(cart)
-    @discount_price = DiscountService.new(cart['products'], @order.price_current).discount_price
+    @discount_price = DiscountService.new(cart, @order.price_current).discount_price
   end
 
   def remove_from_cart
-    cart['products'].delete_if { |h| h["product_id"] == params[:remove_product_id] }
+    cart.cart_items.where(product_id: params[:remove_product_id]).each { |p| p.destroy }
     respond_to do |format|
       format.html { redirect_to new_order_path, notice: 'Product was successfully deleted from cart.' }
     end
@@ -19,10 +19,10 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params).add_cart(cart)
     @order.user_id = current_user.id if current_user.present?
-    @order.price = DiscountService.new(cart['products'], @order.price_current).discount_price
+    @order.price = DiscountService.new(cart, @order.price_current).discount_price
     if @order.save
       flash[:info] = "Order created"
-      session['cart'] = { 'products' => [] }
+      cart.destroy
       redirect_to orders_path
     else
       render 'new'

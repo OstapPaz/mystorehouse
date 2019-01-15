@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
 
-  before_action 'user_admin_checker', only: [:admin_home]
+  before_action :user_admin_checker, only: [:admin_home]
 
   def home
   end

@@ -38,16 +38,16 @@ class Order < ApplicationRecord
   def self.new_from_cart(cart)
     order = self.new
 
-    cart['products'].each do |product|
-      order.orders_products << OrdersProduct.new(product_id: product['product_id'], amount: product['count'])
+    cart.cart_items.each do |cart_item|
+      order.orders_products << OrdersProduct.new(product_id: cart_item.product_id, amount: cart_item.quantity)
     end
 
     order
   end
 
   def add_cart(cart)
-    cart['products'].each do |product|
-      orders_products << OrdersProduct.new(product_id: product['product_id'], amount: product['count'])
+    cart.cart_items.each do |cart_item|
+      orders_products << OrdersProduct.new(product_id: cart_item.product_id, amount: cart_item.quantity)
     end
     self.price = price_current
     self
