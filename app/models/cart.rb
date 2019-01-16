@@ -6,7 +6,7 @@ class Cart < ApplicationRecord
 
   def self.update(cart, products)
     products.each do |product_id, amount|
-      cart.cart_items.where(product_id: product_id).each { |item| item.quantity = amount }
+      cart.cart_items.where(product_id: product_id).update(quantity: amount)
     end
   end
 
