@@ -7,7 +7,6 @@
       <th></th>
     </tr>
     </thead>
-
     <tbody>
 
     <% @order.orders_products.each do |order_product| %>
@@ -23,5 +22,5 @@
     </tbody>
   </table>
   <p> Current price of order <%= @order.price_current %></p>
-  <p> Price with discount <%= @discount_price %> </p>
 <% end %>
+<%= render 'discount' %>

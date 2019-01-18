@@ -2,15 +2,19 @@ Rails.application.routes.draw do
   require 'resque/server'
   # Of course, you need to substitute your application name here, a block
   # like this probably already exists.
-  MyStorehouse::Application.routes.draw do
-    mount Resque::Server.new, at: '/resque'
-  end
+
+  mount Resque::Server.new, at: '/resque'
 
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
   root to: 'static_pages#home'
 
-  resources :products
-  resources :orders
+  resources :products do
+    resources :comments
+  end
+  resources :orders do
+    collection do
+    end
+  end
   resources :categories
   resources :feedbacks
   resources :discounts, only: [:index, :create, :update, :show]
@@ -24,4 +28,7 @@ Rails.application.routes.draw do
   post 'add_to_cart', to: 'products#add_to_cart'
   post 'update_cart', to: 'orders#update_cart'
   delete 'remove_from_cart', to: 'orders#remove_from_cart'
+
+  mount ActionCable.server => '/cable'
+
 end

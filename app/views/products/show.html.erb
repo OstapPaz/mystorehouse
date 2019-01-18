@@ -1,25 +1,44 @@
-  <h3> Product details </h3>
-  <p id="notice" ><%= notice %></p>
 
-  <%= @product.name %> <br>
-  <%= @product.model %> <br>
-  <%= @product.category.name %> <br>
-  <%= @product.price %> UAH <br>
-  <%= @product.show_rating %> <br>
-  <%= image_tag @product.avatar.variant(resize: '400x400')  %> <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="panel panel-default  panel--styled">
+          <div class="panel-body">
+            <div class="col-md-12 panelTop">
+              <div class="col-md-4">
+                <%= image_tag @product.avatar.variant(resize: '350x350'), class: 'img-responsive'  %>
+              </div>
+              <div class="col-md-8">
+                <h2><%= @product.name %> <%= @product.model %></h2>
+                <p><%= @product.adding_information %></p>
+              </div>
+            </div>
 
-  <%= form_tag(add_to_cart_path, method: "post") do%>
-    <%= label_tag(:num,"Number of product:") %>
-    <%= text_field_tag(:num) %>
-    <%= hidden_field_tag(:id, @product.id) %>
-    <%= submit_tag("Add to cart") %>
-  <% end %> <br><br>
+            <div class="col-md-12 panelBottom">
+              <%= form_tag(add_to_cart_path, method: "post") do%>
+                <%= label_tag(:num,"Number of product:") %>
+                <%= text_field_tag(:num) %>
+                <%= hidden_field_tag(:id, @product.id) %>
+                <%= submit_tag("Add to cart") %>
+              <% end %> <br><br>
+              <div class="col-md-4 text-left">
+                <h5>Price <span class="itemPrice"><%= @product.price %> UAH</span></h5>
+              </div>
+              <div class="col-md-4">
+                <div class="stars">
+                  <div id="stars" class="starrr"><%= @product.show_rating %></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <% if user_signed_in? %>
-    <%= render 'comments/form_comment' %>
-  <% end %>
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>
 
-  <%= link_to 'Edit', edit_product_path(@product) %> |
-  <%= link_to 'Back', products_path %>
-
-  <%= render 'comments/product_comments' %>
+<% if user_signed_in? %>
+  <%= render 'comments/comments' %>
+<% end %>

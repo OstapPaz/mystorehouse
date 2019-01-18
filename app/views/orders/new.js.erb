@@ -1,0 +1,19 @@
+/*$( document ).ready(function() {
+
+
+    $('#discount').click(function(event) {
+        event.preventDefault();
+        alert('Handler for click called');
+        $.ajax({
+            type: "GET",
+            url: "/orders/new",
+            dataType: 'json',
+            success:function(data){
+                $('#discount').html(data.discount)
+            }
+        })
+    });
+
+
+
+});*/

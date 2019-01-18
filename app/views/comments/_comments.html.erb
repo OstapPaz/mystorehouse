@@ -1,0 +1,5 @@
+<%= render 'comments/new', product: @product %>
+
+<section id="comments" data-product-id="<%= @product.id %>">
+  <%= render @product.comments %>
+</section>

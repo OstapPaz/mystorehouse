@@ -6,6 +6,11 @@ class OrdersController < ApplicationController
   def new
     @order = Order.new_from_cart(cart)
     @discount_price = DiscountService.new(cart, @order.price_current).discount_price
+
+    respond_to do |format|
+      format.html
+      format.json {render json: { data: @discount_price } }
+    end
   end
 
   def remove_from_cart
@@ -21,8 +26,6 @@ class OrdersController < ApplicationController
     @order.price = DiscountService.new(cart, @order.price_current).discount_price
     if @order.save
       Resque.enqueue(MailSender, current_user, @order)
-      #MailSender.perform_later(current_user, @order) -
-      #OrderMailer.order_email(current_user, @order).deliver +
       flash[:info] = "Order created"
       cart.destroy
       redirect_to orders_path
