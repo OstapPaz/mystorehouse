@@ -1,30 +1,81 @@
 <h3> Discount details </h3>
 <p id="notice" ><%= notice %></p>
 
-<%= @discount.name %> <br>
-<%= @discount.criterion %> <br>
-<%= @discount.criterion_second %> <br>
+<div class="container">
+
+  <h2>Discounts API Documentation</h2>
+
+
+  <hr />
+
+  <div class="method">
+    <div class="row margin-0 list-header hidden-sm hidden-xs">
+      <div class="col-md-3"><div class="header">ID</div></div>
+      <div class="col-md-2"><div class="header">Name</div></div>
+      <div class="col-md-2"><div class="header">Coefficient 1</div></div>
+      <div class="col-md-5"><div class="header">Coefficient 2</div></div>
+    </div>
+
+    <div class="row margin-0">
+      <div class="col-md-3">
+        <div class="cell">
+          <div class="propertyname">
+            <%= @discount.id %>  <span class="mobile-isrequired">[Required]</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="cell">
+          <div class="type">
+            <code><%= @discount.name %>></code>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="cell">
+          <div class="isrequired">
+            <%= @discount.criterion %>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="cell">
+          <div class="description">
+            <%= @discount.criterion_second %>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
 
 <h3> Change discount </h3>
 
 <%= form_for(@discount) do |f| %>
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name, :value => @discount.name %>
-  </div> <br>
+  <div class="container">
+    <div class="col-md-5">
+      <div class="form-area">
+        <form role="form">
+          <br style="clear:both">
+          <h3 style="margin-bottom: 25px; text-align: center;">Discount Form</h3>
+          <div class="form-group">
+            <%= f.label :name %>
+            <%= f.text_field :name, :value => @discount.name, class:  'form-control'%>
+          </div>
+          <div class="form-group">
+            <%= f.label :criterion %>
+            <%= f.text_field :criterion, value: '555 55 55', class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :criterion_second %>
+            <%= f.text_field :criterion_second, value: 'Good site!', maxlength: '140', class: 'form-control' %>
+          </div>
 
-  <div class="field">
-    <%= f.label :criterion %>
-    <%= f.text_field :criterion, :value => @discount.criterion %>
-  </div> <br>
-
-  <div class="field">
-    <%= f.label :criterion_second %>
-    <%= f.text_field :criterion_second, :value => @discount.criterion_second %>
-  </div> <br>
-
-  <div class="actions">
-    <%= f.submit %>
+          <button type="button" id="submit" name="submit" class="btn btn-primary pull-right"><%= f.submit class: 'btn btn-primary pull-right' %></button>
+        </form>
+      </div>
+    </div>
   </div>
 <% end %>
 

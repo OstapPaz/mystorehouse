@@ -8,7 +8,4 @@ class CartService
     end
   end
 
-
-
-
 end

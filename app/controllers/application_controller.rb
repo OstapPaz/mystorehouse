@@ -3,42 +3,11 @@ class ApplicationController < ActionController::Base
   helper_method :order_price, :current_user, :admin?, :cart
   before_action :guest_session, only: [:cart]
 
-=begin
-  def cart
-      if session['cart'].present? && session['cart']['products'].present?
-        session['cart']
-      else
-        session['cart'] = { 'products' => [] }
-      end
-  end
-
-  def add_prod_to_cart(product_id, number)
-    cart['products'] << { 'product_id' => product_id, 'count' => number}
-  end
-
-  def order_price
-    if session['order_price'].present?
-      session['order_price']
-    else
-      session['order_price'] = 0
-    end
-  end
-=end
-
   def cart
     if current_user.nil?
-      guest_session if session[:guest_session].nil?
-      if cart = Cart.find_by(session_id: session[:guest_session])
-        cart
-      else
-        Cart.create!(session_id: session[:guest_session])
-      end
+      without_user
     else
-      if current_user.cart.present?
-        current_user.cart
-      else
-        current_user.cart = Cart.create!
-      end
+      with_user
     end
   end
 
@@ -62,6 +31,25 @@ class ApplicationController < ActionController::Base
   def guest_session
     session[:guest_session] = CartService.generate_id if session[:guest_session].nil?
     session[:guest_session]
+  end
+
+  private
+
+  def with_user
+    if current_user.cart.present?
+      current_user.cart
+    else
+      current_user.cart = Cart.create!
+    end
+  end
+
+  def without_user
+    guest_session if session[:guest_session].nil?
+    if cart = Cart.find_by(session_id: session[:guest_session])
+      cart
+    else
+      Cart.create!(session_id: session[:guest_session])
+    end
   end
 
 end

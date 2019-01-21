@@ -11,22 +11,29 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name,  :value => "Bruce" %>
-  </div> <br>
+  <div class="container">
+    <div class="col-md-5">
+      <div class="form-area">
+        <form role="form">
+          <br style="clear:both">
+          <h3 style="margin-bottom: 25px; text-align: center;">Feedback Form</h3>
+          <div class="form-group">
+            <%= f.label :name %>
+            <%= f.text_field :name, value: 'Bruce', class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :criterion %>
+            <%= f.text_field :criterion, value: '555 55 55', class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :text %>
+            <%= f.text_field :text, value: 'Good site!', maxlength: '140', class: 'form-control' %>
+          </div>
 
-  <div class="field">
-    <%= f.label :contact %>
-    <%= f.text_field :contact, :value => "555 55 55" %>
-  </div> <br>
-
-  <div class="field">
-    <%= f.label :text %>
-    <%= f.text_field :text, :value => "Good site!" %>
-  </div> <br>
-
-  <div class="actions">
-    <%= f.submit %>
+          <button type="button" id="submit" name="submit" class="btn btn-primary pull-right"><%= f.submit class: 'btn btn-primary pull-right' %></button>
+        </form>
+      </div>
+    </div>
   </div>
+
 <% end %>

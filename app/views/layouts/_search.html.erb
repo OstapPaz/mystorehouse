@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="input-group" id="adv-search">
+        <div class="input-group-btn">
+          <div class="btn-group" role="group">
+            <div class="dropdown dropdown-lg">
+              <button type="button" class="btn btn-default dropdown-toggle btn-primary glyphicon glyphicon-search" data-toggle="dropdown" aria-expanded="false"> Search menu <span class="caret"></span></button>
+              <div class="dropdown-menu dropdown-menu-right" role="menu">
+
+                <%= form_tag('/products', method: 'get', class: 'form-horizontal', role: 'form') do %>
+                  <div class="form-group">
+                    <label for="filter">Filter by</label>
+                    <%= select_tag :category, options_for_select(Category.all.map{|el| [el.name, el.id]}.insert(0, "") ), class:'form-control' %>
+                  </div>
+                  <div class="form-group">
+                    <%= label_tag(:criteria, 'Name, model, adding information') %>
+                    <%= text_field_tag :criteria, "", class: 'form-control' %> <br>
+                  </div>
+                  <%= submit_tag('Search', class: "btn btn-primary") %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

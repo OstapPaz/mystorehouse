@@ -9,15 +9,53 @@
 
   <tbody>
   <% @discounts.each do |discount| %>
-    <tr>
-      <td> Discount for: <%= discount.name %> </td>
-      <td> Number criterion: <%= discount.criterion %> </td>
-      <td> Coefficient criterion: <%= discount.criterion_second %> </td>
-      <td><%= link_to 'Discount', discount_path(discount) %></td>
-    </tr>
+    <div class="method">
+      <div class="row margin-0 list-header hidden-sm hidden-xs">
+        <div class="col-md-3"><div class="header">ID</div></div>
+        <div class="col-md-2"><div class="header">Name</div></div>
+        <div class="col-md-2"><div class="header">Coefficient 1</div></div>
+        <div class="col-md-5"><div class="header">Coefficient 2</div></div>
+      </div>
+
+      <div class="row margin-0">
+        <div class="col-md-3">
+          <div class="cell">
+            <div class="propertyname">
+              <%= discount.id %>  <span class="mobile-isrequired">[Required]</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="cell">
+            <div class="type">
+              <code><%= discount.name %>></code>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="cell">
+            <div class="isrequired">
+              <%= discount.criterion %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="cell">
+            <div class="description">
+              <%= discount.criterion_second %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="cell">
+            <div class="description">
+              <%= link_to 'Change', discount_path(discount) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
   <% end %>
   </tbody>
 </table>
-<br>
-
-<%= render 'form_new' %>

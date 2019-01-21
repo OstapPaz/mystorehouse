@@ -8,12 +8,8 @@ class DiscountsController < ApplicationController
   end
 
   def create
-    @discount = Discount.new(discount_params)
-    if @discount.save
-      redirect_to discounts_path
-    else
-      redirect_to discounts_path
-    end
+    @discount = Discount.create!(discount_params)
+    redirect_to discounts_path
   end
 
   def show

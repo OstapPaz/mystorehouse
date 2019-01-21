@@ -13,42 +13,60 @@
 
   <% if user_signed_in? %>
 
-    <div class="name">
-      <%= f.label :name_customer %>
-      <%= f.text_field :name_customer, :value => current_user.name %>
-    </div> <br>
+    <div class="container">
+      <div class="col-md-5">
+        <div class="form-area">
+          <form role="form">
+            <br style="clear:both">
+            <h3 style="margin-bottom: 25px; text-align: center;">Order form</h3>
+            <div class="form-group">
+              <%= f.label :name %>
+              <%= f.text_field :name, :value => current_user.name, class:  'form-control'%>
+            </div>
+            <div class="form-group">
+              <%= f.label :contact_phone_number %>
+              <%= f.text_field :contact_phone_number, :value => current_user.phone_number, class:  'form-control'%>
+            </div>
+            <div class="form-group">
+              <%= f.label :address %>
+              <%= f.text_field :address, :value => 'Gotham', class:  'form-control' %>
+            </div>
 
-    <div class="field">
-      <%= f.label :contact_phone_number %>
-      <%= f.text_field :contact_phone_number, :value => current_user.customer_contacts.contact_number %>
-    </div> <br>
-
-    <div class="field">
-      <%= f.label :address %>
-      <%= f.text_field :address, :value => current_user.customer_contacts.address %>
-    </div> <br>
+            <button type="button" id="submit" name="submit" class="btn btn-primary pull-right"><%= f.submit class: 'btn btn-primary pull-right' %></button>
+          </form>
+        </div>
+      </div>
+    </div>
 
   <% else %>
 
-    <div class="name">
-      <%= f.label :name_customer %>
-      <%= f.text_field :name_customer,  :value => "Oleg" %>
-    </div> <br>
+    <div class="container">
+      <div class="col-md-5">
+        <div class="form-area">
+          <form role="form">
+            <br style="clear:both">
+            <h3 style="margin-bottom: 25px; text-align: center;">Discount Form</h3>
+            <div class="form-group">
+              <%= f.label :name %>
+              <%= f.text_field :name, :value => 'Dmytro', class:  'form-control'%>
+            </div>
+            <div class="form-group">
+              <%= f.label :contact_phone_number %>
+              <%= f.text_field :contact_phone_number, :value => '123 456 789', class:  'form-control'%>
+            </div>
+            <div class="form-group">
+              <%= f.label :address %>
+              <%= f.text_field :address, :value => 'Gotham', class:  'form-control' %>
+            </div>
 
-    <div class="field">
-      <%= f.label :contact_phone_number %>
-      <%= f.text_field :contact_phone_number, :value => "123 45 67" %>
-    </div> <br>
-
-    <div class="field">
-      <%= f.label :address %>
-      <%= f.text_field :address, :value => "Lviv" %>
-    </div> <br>
+            <button type="button" id="submit" name="submit" class="btn btn-primary pull-right"><%= f.submit class: 'btn btn-primary pull-right' %></button>
+          </form>
+        </div>
+      </div>
+    </div>
 
   <% end %>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
 <% end %>
 
 <%= render 'form_update_cart' %>

@@ -17,4 +17,25 @@
 //= require turbolinks
 //= require_tree .
 
+$( document ).ready(function() {
+
+
+    $('#discount').click(function(event) {
+        event.preventDefault();
+        $.ajax({
+            type: "GET",
+            url: "/orders/new",
+            dataType: 'json',
+            success:function(ajax_responce){
+                $('#discount').html(ajax_responce.data)
+            }
+        })
+    });
+
+
+
+});
+
+
+
 

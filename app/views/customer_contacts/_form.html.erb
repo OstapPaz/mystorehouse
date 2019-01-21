@@ -10,18 +10,23 @@
       </ul>
     </div>
   <% end %>
+  <div class="container">
+    <div class="col-md-5">
+      <div class="form-area">
+        <form role="form">
+          <br style="clear:both">
+          <div class="form-group">
+            <%= f.label :contact_number %>
+            <%= f.text_field :contact_number, :value => @customer_contacts.contact_number, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :address %>
+            <%= f.text_field :address, :value => @customer_contacts.address, class: 'form-control' %>
+          </div>
 
-  <div class="field">
-    <%= f.label :contact_number %>
-    <%= f.text_field :contact_number, :value => @customer_contacts.contact_number %>
-  </div> <br>
-
-  <div class="field">
-    <%= f.label :address %>
-    <%= f.text_field :address, :value => @customer_contacts.address %>
-  </div> <br>
-
-  <div class="actions">
-    <%= f.submit %>
+          <button type="button" id="submit" name="submit" class="btn btn-primary pull-right"><%= f.submit class: 'btn btn-primary pull-right' %></button>
+        </form>
+      </div>
+    </div>
   </div>
 <% end %>

@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
   end
 
   def remove_from_cart
-    cart.cart_items.where(product_id: params[:remove_product_id]).each { |p| p.destroy }
+    cart.cart_items.where(product_id: params[:remove_product_id]).each.destroy
     respond_to do |format|
       format.html { redirect_to new_order_path, notice: 'Product was successfully deleted from cart.' }
     end
@@ -23,12 +23,8 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params).add_cart(cart)
     @order.user_id = current_user.id if current_user.present?
-    @order.price = DiscountService.new(cart, @order.price_current).discount_price
     if @order.save
-      Resque.enqueue(MailSender, current_user, @order)
-      flash[:info] = "Order created"
-      cart.destroy
-      redirect_to orders_path
+      save_functionality
     else
       render 'new'
     end
@@ -65,6 +61,13 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:name_customer, :contact_phone_number, :address)
+  end
+
+  def save_functionality
+    Resque.enqueue(MailSender, current_user, @order)
+    flash[:info] = "Order created"
+    cart.destroy
+    redirect_to orders_path
   end
 
 end

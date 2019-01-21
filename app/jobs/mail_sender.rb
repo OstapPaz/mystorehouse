@@ -3,6 +3,5 @@ class MailSender
 
   def self.perform(user, order)
     OrderMailer.order_email(user, order).deliver
-    p "-------------------------------------"
   end
 end

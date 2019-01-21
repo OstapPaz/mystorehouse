@@ -9,5 +9,6 @@ class User < ApplicationRecord
   has_many :orders
   has_many :comments, dependent: :destroy
   validates :name, :email, presence: true
+  ratyrate_rater
 
 end

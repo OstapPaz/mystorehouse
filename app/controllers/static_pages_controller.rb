@@ -8,5 +8,8 @@ class StaticPagesController < ApplicationController
   def admin_home
   end
 
+  def contact
+  end
+
 
 end

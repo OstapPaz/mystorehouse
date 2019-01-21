@@ -14,22 +14,25 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="/">Home</a></li>
         <li><a href=<%= products_path %>>Products</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href=<%= contact_path %>>Contact</a></li>
         <% if admin? %>
           <li><a href=<%= admin_path %>>Admin page</a></li>
         <% end %>
+        <li><a href=<%= customer_contacts_show_path %>>My contacts</a></li>
+        <li><a href=<%= new_feedback_path %>>Create feedback</a></li>
+        <% if admin? %>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Add product</a></li>
-            <li><a href="#">Show orders</a></li>
+            <li><a href=<%= new_product_path %>>Add product</a></li>
+            <li><a href=<%= orders_path %>>Show orders</a></li>
             <li><a href=<%= customer_contacts_show_path %>>Customer contacts</a></li>
             <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Nav header</li>
-            <li><a href="#">Separated link</a></li>
-            <li><a href="#">One more separated link</a></li>
+            <li><a href=<%= feedbacks_path %>>Show feedbacks</a></li>
+            <li><a href=<%= discounts_path %>>Show discounts</a></li>
           </ul>
         </li>
+        <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href=<%=new_order_path%>>Create order</a></li>

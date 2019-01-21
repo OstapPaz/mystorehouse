@@ -18,6 +18,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'bootstrap'
 gem 'jquery-rails'
 
+gem 'ratyrate'
+gem 'will_paginate', '~> 3.0'
+
 gem 'autoprefixer-rails', '8.6.5'
 
 gem 'therubyracer'

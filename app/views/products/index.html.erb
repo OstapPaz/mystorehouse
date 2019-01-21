@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 <h1>Products</h1>
 
-<%= render 'filter_form'%>
+<%= render 'layouts/search'%>
 
 <% @products.each do |product| %>
 <div class="col-md-2 column productbox">
@@ -10,6 +10,8 @@
   <div class="productprice"><div class="pull-right"><%= link_to 'Show', product %></div><div class="pricetext"> ‎₴ ‎<%= product.price %></div></div>
 </div>
 <% end %>
+
+<%= will_paginate @products %>
 
 <% if admin? %>
   <%= link_to 'New Product', new_product_path %>

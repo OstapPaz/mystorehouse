@@ -49,7 +49,7 @@ class Order < ApplicationRecord
     cart.cart_items.each do |cart_item|
       orders_products << OrdersProduct.new(product_id: cart_item.product_id, amount: cart_item.quantity)
     end
-    self.price = price_current
+    self.price = DiscountService.new(cart, price_current).discount_price
     self
   end
 
@@ -71,7 +71,7 @@ class Order < ApplicationRecord
     else
       confirm
     end
-    self.update(status: self.status)
+    update(status: status)
   end
 
 end
