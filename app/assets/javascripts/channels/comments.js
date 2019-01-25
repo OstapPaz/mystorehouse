@@ -24,6 +24,5 @@ App.comments = App.cable.subscriptions.create("CommentsChannel", {
     },
     received: function(data) {
         this.collection().append(data['comment']);
-        debugger
     }
 });

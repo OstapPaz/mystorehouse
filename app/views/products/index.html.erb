@@ -1,17 +1,38 @@
 <p id="notice"><%= notice %></p>
 <h1>Products</h1>
 
-<%= render 'layouts/search'%>
-
-<% @products.each do |product| %>
-<div class="col-md-2 column productbox">
-  <%= image_tag product.avatar, size: '250x250'  %>
-  <div class="producttitle"><%= product.name %> <%= product.model %></div>
-  <div class="productprice"><div class="pull-right"><%= link_to 'Show', product %></div><div class="pricetext"> ‎₴ ‎<%= product.price %></div></div>
-</div>
+<%= form_for_filterrific @filterrific do |f| %>
+  <div>
+    Search
+    <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
+    <%= f.text_field(
+            :search_query,
+            class: 'filterrific-periodically-observed'
+        ) %>
+  </div>
+  <div>
+    Category
+    <%= f.select(
+            :with_category_id,
+            @filterrific.select_options[:with_category_id],
+            { include_blank: '- Any -' }
+        ) %>
+  </div>
+  <div>
+    Sorted by
+    <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
+  </div>
+  <div>
+    <%= link_to(
+            'Reset filters',
+            reset_filterrific_url,
+            ) %>
+  </div>
+  <%# add an automated spinner to your form when the list is refreshed %>
+  <%= render_filterrific_spinner %>
 <% end %>
 
-<%= will_paginate @products %>
+<%= render 'products/list', locals: { products: @products } %>
 
 <% if admin? %>
   <%= link_to 'New Product', new_product_path %>

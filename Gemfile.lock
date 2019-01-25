@@ -58,7 +58,7 @@ GEM
     autoprefixer-rails (8.6.5)
       execjs
     aws-eventstream (1.0.1)
-    aws-partitions (1.133.0)
+    aws-partitions (1.134.0)
     aws-sdk-core (3.46.0)
       aws-eventstream (~> 1.0)
       aws-partitions (~> 1.0)
@@ -82,7 +82,7 @@ GEM
       sass (>= 3.5.2)
     builder (3.2.3)
     byebug (10.0.2)
-    capybara (3.12.0)
+    capybara (3.13.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
@@ -116,12 +116,13 @@ GEM
       tzinfo
     execjs (2.7.0)
     ffi (1.10.0)
+    filterrific (5.1.0)
     fugit (1.1.8)
       et-orbi (~> 1.1, >= 1.1.7)
       raabro (~> 1.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    i18n (1.5.2)
+    i18n (1.5.3)
       concurrent-ruby (~> 1.0)
     image_processing (1.7.1)
       mini_magick (~> 4.0)
@@ -228,9 +229,9 @@ GEM
       redis (>= 2.2, < 5)
     ref (2.0.0)
     regexp_parser (1.3.0)
-    responders (2.4.0)
-      actionpack (>= 4.2.0, < 5.3)
-      railties (>= 4.2.0, < 5.3)
+    responders (2.4.1)
+      actionpack (>= 4.2.0, < 6.0)
+      railties (>= 4.2.0, < 6.0)
     resque (1.27.4)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
@@ -329,6 +330,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   devise
+  filterrific
   image_processing (~> 1.2)
   jbuilder (~> 2.5)
   jquery-rails

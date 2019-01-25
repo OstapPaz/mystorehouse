@@ -6,9 +6,30 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    products = Product.filter(params.slice(:criteria, :category))
-    @products = products.paginate(page: params[:page], per_page: 12)
+    @filterrific = initialize_filterrific(
+        Product,
+        params[:filterrific],
+        select_options: {
+            sorted_by: Product.options_for_sorted_by,
+            with_category_id: Category.options_for_select,
+        },
+        persistence_id: "shared_key",
+        default_filter_params: { },
+        available_filters: [:sorted_by, :with_category_id, :search_query],
+        sanitize_params: true,
+        ) || return
+    @products = @filterrific.find.page(params[:page]).per_page(12)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+
+  rescue ActiveRecord::RecordNotFound => e
+    puts "Had to reset filterrific params: #{e.message}"
+    redirect_to(reset_filterrific_url(format: :html)) && return
   end
+
 
   # GET /products/1
   # GET /products/1.json
@@ -62,13 +83,6 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
       format.json { head :no_content }
-    end
-  end
-
-  def add_to_cart
-    add_prod_to_cart(params[:id], params[:num].to_i)
-    respond_to do |format|
-      format.html { redirect_to products_path, notice: 'Product was successfully added to cart.' }
     end
   end
 

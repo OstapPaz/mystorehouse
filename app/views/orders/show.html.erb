@@ -13,7 +13,7 @@
         <td> product name: <%= product.name %> </td>
         <td> product model: <%= product.model %> </td>
         <td> product price: <%= product.price %> </td>
-        <td> product amount: <%= product.orders_products.where(product_id: product.id).first.amount %> </td>
+        <td> product amount: <%= product.orders_products.where(order_id: @ord.id).first.amount %> </td>
       </tr>
     <% end %>
     </tbody>

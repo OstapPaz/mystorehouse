@@ -20,28 +20,28 @@
       <div class="col-md-3">
         <div class="cell">
           <div class="propertyname">
-            <%= @discount.id %>  <span class="mobile-isrequired">[Required]</span>
+            <%= discount.id %>  <span class="mobile-isrequired">[Required]</span>
           </div>
         </div>
       </div>
       <div class="col-md-2">
         <div class="cell">
           <div class="type">
-            <code><%= @discount.name %>></code>
+            <code><%= discount.name %></code>
           </div>
         </div>
       </div>
       <div class="col-md-2">
         <div class="cell">
           <div class="isrequired">
-            <%= @discount.criterion %>
+            <%= discount.criterion %>
           </div>
         </div>
       </div>
       <div class="col-md-5">
         <div class="cell">
           <div class="description">
-            <%= @discount.criterion_second %>
+            <%= discount.criterion_second %>
           </div>
         </div>
       </div>
@@ -52,7 +52,7 @@
 
 <h3> Change discount </h3>
 
-<%= form_for(@discount) do |f| %>
+<%= form_for(@discount, url: admin_discount_path) do |f| %>
   <div class="container">
     <div class="col-md-5">
       <div class="form-area">
@@ -65,11 +65,11 @@
           </div>
           <div class="form-group">
             <%= f.label :criterion %>
-            <%= f.text_field :criterion, value: '555 55 55', class: 'form-control' %>
+            <%= f.text_field :criterion, value: @discount.criterion, class: 'form-control' %>
           </div>
           <div class="form-group">
             <%= f.label :criterion_second %>
-            <%= f.text_field :criterion_second, value: 'Good site!', maxlength: '140', class: 'form-control' %>
+            <%= f.text_field :criterion_second, value: @discount.criterion_second , maxlength: '140', class: 'form-control' %>
           </div>
 
           <button type="button" id="submit" name="submit" class="btn btn-primary pull-right"><%= f.submit class: 'btn btn-primary pull-right' %></button>
@@ -79,4 +79,4 @@
   </div>
 <% end %>
 
-<%= link_to 'Back', discounts_path %>
+<%= link_to 'Back', admin_discounts_path %>

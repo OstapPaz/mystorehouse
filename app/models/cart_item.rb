@@ -6,7 +6,7 @@ class CartItem < ApplicationRecord
   validate :product_present
 
   def total_price
-    unit_price * quantity
+    product.price * quantity
   end
 
   private
@@ -17,8 +17,6 @@ class CartItem < ApplicationRecord
     end
   end
 
-  def unit_price
-    product.price
-  end
+
 
 end

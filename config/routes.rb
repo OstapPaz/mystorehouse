@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   post '/rate' => 'rater#create', :as => 'rate'
   require 'resque/server'
-  # Of course, you need to substitute your application name here, a block
-  # like this probably already exists.
 
   mount Resque::Server.new, at: '/resque'
 
@@ -12,13 +10,13 @@ Rails.application.routes.draw do
   resources :products do
     resources :comments
   end
-  resources :orders do
-    collection do
-    end
-  end
-  resources :categories
+  resources :orders
   resources :feedbacks
-  resources :discounts, only: [:index, :create, :update, :show]
+
+  namespace :admin do
+    resources :categories, except: [:new]
+    resources :discounts, only: [:index, :create, :update, :show]
+  end
 
   get 'admin', to: 'static_pages#admin_home'
   get 'contact', to: 'static_pages#contact'
@@ -27,9 +25,8 @@ Rails.application.routes.draw do
   get 'order/all', to: 'orders#index_all'
   get 'orders/change_status/:id', to: 'orders#change_status', as: 'change_status'
   post 'create_comment', to: 'comments#create'
-  post 'add_to_cart', to: 'products#add_to_cart'
-  post 'update_cart', to: 'orders#update_cart'
-  delete 'remove_from_cart', to: 'orders#remove_from_cart'
+  post 'add_to_cart', to: 'carts#add_to_cart'
+  delete 'remove_from_cart', to: 'carts#remove_from_cart'
 
   mount ActionCable.server => '/cable'
 

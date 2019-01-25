@@ -43,7 +43,7 @@ class DiscountService
   end
 
   def same_category #discount on products for same category
-    Discount.find_by(name: 'Same category')
+    Discount.find_by(name: 'same category')
   end
 
   def number_all_products #discount on number of all products

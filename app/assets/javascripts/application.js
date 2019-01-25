@@ -13,6 +13,7 @@
 //= require rails-ujs
 //= require jquery
 //= require jquery_ujs
+//= require filterrific/filterrific-jquery
 //= require twitter/bootstrap
 //= require turbolinks
 //= require_tree .

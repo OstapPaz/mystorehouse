@@ -23,6 +23,22 @@ products_list = [
     ['Tank', 'Tiger 3', 890, 2, text]
 ]
 
+Category.create!(name: 'Defence')
+Category.create!(name: 'Sport')
+Category.create!(name: 'Home')
+
 products_list.each do |name, model, price, category_id, text|
     Product.create!(name: name, model: model, price: price, category_id: category_id, adding_information: text)
 end
+
+User.create!(
+    name: 'Bruce',
+    email: "bruce@gnail.com",
+    password: "qqqqqq",
+    admin_permission: true
+)
+
+Discount.create!(name: 'same category', criterion: 3, criterion_second: 0.3)
+Discount.create!(name: 'number of all products', criterion: 2, criterion_second: 0.2)
+Discount.create!(name: 'price board', criterion: 300, criterion_second: 0.2)
+

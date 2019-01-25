@@ -2,6 +2,7 @@ class Order < ApplicationRecord
   include AASM
 
   has_many :orders_products
+  accepts_nested_attributes_for :orders_products
   has_many :products, :through => :orders_products
   belongs_to :user, optional: true
 
@@ -33,28 +34,6 @@ class Order < ApplicationRecord
       transitions from: [:archived], to: :rejected
     end
 
-  end
-
-  def self.new_from_cart(cart)
-    order = self.new
-
-    cart.cart_items.each do |cart_item|
-      order.orders_products << OrdersProduct.new(product_id: cart_item.product_id, amount: cart_item.quantity)
-    end
-
-    order
-  end
-
-  def add_cart(cart)
-    cart.cart_items.each do |cart_item|
-      orders_products << OrdersProduct.new(product_id: cart_item.product_id, amount: cart_item.quantity)
-    end
-    self.price = DiscountService.new(cart, price_current).discount_price
-    self
-  end
-
-  def price_current
-    orders_products.sum(0) { |order_product| order_product.product.price * order_product.amount.to_i }
   end
 
   def change_order_status

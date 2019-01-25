@@ -1,27 +1,22 @@
 class OrdersController < ApplicationController
 
   before_action :authenticate_user!, only: [:index, :change_status, :index_all, :destroy]
-  before_action :user_admin_checker, only: [:index_all, :change_status, :destroy]
+  before_action :user_admin_checker, only: [:change_status, :destroy]
 
   def new
-    @order = Order.new_from_cart(cart)
-    @discount_price = DiscountService.new(cart, @order.price_current).discount_price
+    @order = Order.new
+    @order.orders_products.build
+    @discount_price = DiscountService.new(cart, price_without_discount).discount_price
 
     respond_to do |format|
       format.html
-      format.json {render json: { data: @discount_price } }
-    end
-  end
-
-  def remove_from_cart
-    cart.cart_items.where(product_id: params[:remove_product_id]).each.destroy
-    respond_to do |format|
-      format.html { redirect_to new_order_path, notice: 'Product was successfully deleted from cart.' }
+      format.json { render json: { data: @discount_price } }
     end
   end
 
   def create
-    @order = Order.new(order_params).add_cart(cart)
+    @order = Order.new(order_params)
+    @order.price = DiscountService.new(cart, price_without_discount).discount_price
     @order.user_id = current_user.id if current_user.present?
     if @order.save
       save_functionality
@@ -31,16 +26,7 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.where(user_id: current_user.id)
-  end
-
-  def index_all
-    @orders = Order.all
-  end
-
-  def update_cart
-    Cart.update(cart, params['products'])
-    redirect_back fallback_location: new_order_path
+    @orders = current_user.admin_permission ? Order.all : Order.where(user_id: current_user.id)
   end
 
   def change_status
@@ -60,7 +46,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:name_customer, :contact_phone_number, :address)
+    params.require(:order).permit(:name_customer, :contact_phone_number, :address, orders_products_attributes: [ :amount, :product_id ])
   end
 
   def save_functionality
