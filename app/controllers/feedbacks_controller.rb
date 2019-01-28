@@ -1,10 +1,5 @@
 class FeedbacksController < ApplicationController
   before_action :set_feedback, only: [:show, :edit, :update, :destroy]
-  before_action :user_admin_checker, only: [:index]
-
-  def index
-    @feedbacks = Feedback.all
-  end
 
   def new
     @feedback = Feedback.new

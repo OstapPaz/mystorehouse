@@ -35,5 +35,5 @@
 <%= render 'products/list', locals: { products: @products } %>
 
 <% if admin? %>
-  <%= link_to 'New Product', new_product_path %>
+  <%= link_to 'New Product', new_admin_product_path %>
 <% end %>

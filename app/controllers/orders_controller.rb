@@ -1,7 +1,6 @@
 class OrdersController < ApplicationController
 
-  before_action :authenticate_user!, only: [:index, :change_status, :index_all, :destroy]
-  before_action :user_admin_checker, only: [:change_status, :destroy]
+  before_action :authenticate_user!, only: [:index, :change_status, :destroy]
 
   def new
     @order = Order.new
@@ -26,21 +25,11 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = current_user.admin_permission ? Order.all : Order.where(user_id: current_user.id)
-  end
-
-  def change_status
-    Order.find(params[:id]).change_order_status
-    redirect_to order_all_path
+    @orders = admin? ? Order.all : Order.where(user_id: current_user.id)
   end
 
   def show
     @ord = Order.find(params[:id])
-  end
-
-  def destroy
-    Order.destroy(params[:id])
-    redirect_to order_all_path
   end
 
   private
