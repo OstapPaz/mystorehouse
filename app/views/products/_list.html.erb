@@ -6,7 +6,7 @@
 
   <% @products.each do |product| %>
     <div class="col-md-2 column productbox">
-      <%= image_tag product.avatar, size: '250x250'  %>
+      <%= show_avatar(product)  %>
       <div class="producttitle"><%= product.name %> <%= product.model %></div>
       <div class="productprice"><div class="pull-right"><%= link_to 'Show', product %></div><div class="pricetext"> ‎₴ ‎<%= product.price %></div></div>
     </div>

@@ -1,11 +1,12 @@
 class OrdersController < ApplicationController
 
   before_action :authenticate_user!, only: [:index, :change_status, :destroy]
+  helper_method :price_without_discount
 
   def new
     @order = Order.new
     @order.orders_products.build
-    @discount_price = DiscountService.new(cart, price_without_discount).discount_price
+    @discount_price = discount_price
 
     respond_to do |format|
       format.html
@@ -15,10 +16,14 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
-    @order.price = DiscountService.new(cart, price_without_discount).discount_price
+    cart.update_cart_from_order(@order.orders_products)
+    @order.price = discount_price
     @order.user_id = current_user.id if current_user.present?
     if @order.save
-      save_functionality
+      Resque.enqueue(MailSender, current_user, @order)
+      flash[:info] = 'Order created'
+      cart.destroy
+      redirect_to orders_path
     else
       render 'new'
     end
@@ -35,14 +40,16 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:name_customer, :contact_phone_number, :address, orders_products_attributes: [ :amount, :product_id ])
+    params.require(:order).permit(:name_customer, :contact_phone_number,
+                                  :address, orders_products_attributes: [ :amount, :product_id ])
   end
 
-  def save_functionality
-    Resque.enqueue(MailSender, current_user, @order)
-    flash[:info] = "Order created"
-    cart.destroy
-    redirect_to orders_path
+  def discount_price
+    DiscountService.new(cart).discount_price
+  end
+
+  def price_without_discount
+    DiscountService.new(cart).price_without_discount
   end
 
 end

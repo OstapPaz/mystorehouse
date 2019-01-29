@@ -1,8 +1,7 @@
 
 <% cache comment do %>
-  <div class="comment">
+  <div class="comment" id="comment">
       <td> Text <%= comment.text %> </td>
-      <td> Rating <%= comment.rating %></td>
       <td> User <%= comment.user.name %></td>
       <td> Time<%= comment.updated_at %></td>
   </div>

@@ -17,9 +17,7 @@
 //= require twitter/bootstrap
 //= require turbolinks
 //= require_tree .
-
 $( document ).ready(function() {
-
 
     $('#discount').click(function(event) {
         event.preventDefault();
@@ -33,10 +31,6 @@ $( document ).ready(function() {
         })
     });
 
-
-
 });
-
-
 
 

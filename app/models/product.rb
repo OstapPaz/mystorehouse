@@ -7,7 +7,6 @@ class Product < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_one_attached :avatar
   ratyrate_rateable 'quality'
-  before_create :check_avatar
 
   filterrific(
       default_filter_params: { sorted_by: 'created_at_desc' },
@@ -20,7 +19,7 @@ class Product < ApplicationRecord
 
   scope :search_query, ->(query) {
     return nil  if query.blank?
-    terms = query.downcase.split(/\s+/)
+    terms = query.to_s.downcase.split(/\s+/)
 
     terms = terms.map { |e|
       (e.tr("*", "%") + "%").gsub(/%+/, "%")
@@ -50,17 +49,9 @@ class Product < ApplicationRecord
     end
   }
 
-  scope :with_category_id, ->(category_ids) {
+  scope :with_category_id, -> (category_ids) {
     where(category_id: [*category_ids])
   }
-
-  def check_avatar
-    #default_image = '/home/opazyniuk/Downloads/question_top.jpg'
-    default_image = Rails.root + 'app' + 'assets' + 'images' + 'question_top.jpg'
-    unless avatar.attached?
-      avatar.attach(io: File.open(default_image), filename: 'default', content_type: 'image/jpeg')
-    end
-  end
 
   def self.options_for_sorted_by
     [

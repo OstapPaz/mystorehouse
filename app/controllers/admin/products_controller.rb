@@ -1,6 +1,5 @@
 class Admin::ProductsController < Admin::BaseController
   before_action :set_product, except: [:new, :create]
-  after_action :product_avatar, only: [:create]
 
   def new
     @product = Product.new
@@ -52,9 +51,6 @@ class Admin::ProductsController < Admin::BaseController
     params.require(:product).permit(:name, :model, :price, :category_id, :avatar)
   end
 
-  def product_avatar
-    @product.check_avatar
-  end
 
 
 end

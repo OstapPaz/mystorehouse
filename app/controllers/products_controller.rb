@@ -9,12 +9,12 @@ class ProductsController < ApplicationController
             sorted_by: Product.options_for_sorted_by,
             with_category_id: Category.options_for_select,
         },
-        persistence_id: "shared_key",
+        persistence_id: 'shared_key',
         default_filter_params: { },
         available_filters: [:sorted_by, :with_category_id, :search_query],
         sanitize_params: true,
-        ) || return
-    @products = @filterrific.find.page(params[:page]).per_page(12)
+        )
+    @products = @filterrific.find.page(params[:page]).per_page(PER_PAGE)
 
     respond_to do |format|
       format.html

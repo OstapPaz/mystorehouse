@@ -6,6 +6,6 @@ class RenderCommentJob < ApplicationJob
   end
 
   def render_comment(comment)
-    ApplicationController.renderer.render(partial: 'comments/comment', locals: { comment: comment })
+    ApplicationController.render json: comment.as_json
   end
 end

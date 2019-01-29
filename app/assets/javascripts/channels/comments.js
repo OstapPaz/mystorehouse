@@ -3,6 +3,10 @@ App.comments = App.cable.subscriptions.create("CommentsChannel", {
     return $('#comments');
   },
 
+/*  generateHtml: function(comment) {
+    let formComment = $('#comment').html()
+  },*/
+
   connected: function() {
       return setTimeout((function(_this) {
           return function() {
@@ -23,6 +27,8 @@ App.comments = App.cable.subscriptions.create("CommentsChannel", {
         }
     },
     received: function(data) {
-        this.collection().append(data['comment']);
+        let comment = JSON.parse(data['foo']);
+        //comment = generateHTML(comment);
+        this.collection().append(comment);
     }
 });
